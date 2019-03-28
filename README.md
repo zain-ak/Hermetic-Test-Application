@@ -6,4 +6,13 @@ A Kotlin-based Android Application for learning some of the more advanced concep
   
 The first application, *🐱 Cat Names*, can be accessed [here](https://github.com/zain-ak/Advanced-Espresso-Practice-Application). *🐱 Cat Names* covers Espresso testing involving intents.
 <br>
-_General Note:_ There are two packages in folder for testing, once is for unit testing (**test**) and one is for instrumentation testing (**androidTest**). Instrumentation testing is UI testing so that's what Espresso testing falls under. Create all test files under the *androidTest* package.
+### Dependency Injection
+Repeatable tests are ones where the results of a test will be the same as long as the application doesn't change. This requires the test environment to be *hermetic:*
+   **Hermetic:** A test environment sealed from external dependencies.
+
+In this application, an external dependency is being used for the time and it outputs a certain value based on the time. If you were to write a test for this, it would only pass at a certain time of day but fail at another time. This makes the test *unrepeatable.* To remedy this, you use a **dependency injection pattern**; this is a way to organize your code so that it's collected in one place.
+
+For production, you're going to use the actual external dependencies. But for testing purposes, you'll use the organized code to have more control over your tests. So, the first step is to *extract the dependency*; in the case of this application, `DateTime() `  will be extracted.
+
+ - 
+
