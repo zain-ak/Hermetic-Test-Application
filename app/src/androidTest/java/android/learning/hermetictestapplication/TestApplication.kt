@@ -1,10 +1,10 @@
 package android.learning.hermetictestapplication
 
-class TestApplication : GreetingApplication() {
-    private lateinit var clock: Clock
+import org.mockito.Mockito
 
-    fun setClock(clock: Clock) {
-        this.clock = clock
+class TestApplication : GreetingApplication() {
+    private val clock: Clock by lazy {
+        Mockito.mock(Clock::class.java)
     }
 
     override fun provideClock() : Clock = clock
