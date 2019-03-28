@@ -10,7 +10,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val now = DateTime()
+        val app = application as GreetingApplication
+        val now = app.provideClock().getNow()
 
         val greetingId = when (now.hourOfDay) {
             in 5..12 -> R.string.greeting_morning
