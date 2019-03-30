@@ -3,7 +3,9 @@
 A Kotlin-based Android Application for learning some of the more advanced concepts of the Espresso framework for UI Testing. This application is the second of two applications exploring these concepts. The concepts covered in this repo are:
  - Hermetic Test Environments
    - Dependency Injection
-  
+
+*Note:* Later topics incl. Mockito and Dagger were not coded and documented in this chapter as I had trouble setting Mockito up succesfully. There are some compatibility issues specific to Kotlin which I was not able to resolve despite extensive research online. Will learn Mockito again along with Dagger to have a more complete understanding of Dependency Injections.
+
 The first application, *🐱 Cat Names*, can be accessed [here](https://github.com/zain-ak/Advanced-Espresso-Practice-Application). *🐱 Cat Names* covers Espresso testing involving intents.
 <br>
 ### Dependency Injection
