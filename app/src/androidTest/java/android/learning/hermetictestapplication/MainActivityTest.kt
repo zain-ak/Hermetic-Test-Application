@@ -16,7 +16,7 @@ import org.mockito.Mockito
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
-    @JvmField @Rule
+    @Rule @JvmField
     var activityTestRule = ActivityTestRule(MainActivity::class.java, true, false)
 
     @Test
