@@ -12,7 +12,56 @@ Repeatable tests are ones where the results of a test will be the same as long a
 
 In this application, an external dependency is being used for the time and it outputs a certain value based on the time. If you were to write a test for this, it would only pass at a certain time of day but fail at another time. This makes the test *unrepeatable.* To remedy this, you use a **dependency injection pattern**; this is a way to organize your code so that it's collected in one place.
 
-For production, you're going to use the actual external dependencies. But for testing purposes, you'll use the organized code to have more control over your tests. So, the first step is to *extract the dependency*; in the case of this application, `DateTime() `  will be extracted.
+For production, you're going to use the actual external dependencies. But for testing purposes, you'll use the organized code to have more control over your tests. So, the first step is to *extract the dependency*; in the case of this application, `DateTime()`  will be extracted by doing the following:
 
- - 
+ - Creating two new classes called *Clock.kt* and *GreetingApplication.kt*
+   - *Clock.kt* consists of the `DateTime()` variable only:
+     
+     ```java
+     class Clock {
+      fun getNow() = DateTime()
+     }
+     ```
+   - *GreetingApplication.kt* will act as an external application to call the class `Clock`:
+   
+     ```java
+     class GreetingApplication : Application() {
+         fun provideClock() : Clock = Clock()
+     }
+     ```
+
+     \*`GreetingApplication` also needs to be added to the *AndroidManifest.xml* under the `<application>` tag as `android:name=".GreetingApplication"`
+
+ - Including `DateTime()` in *MainActivity.kt* using the above classes:
+   
+   ```java
+   val app = application as GreetingApplication
+   val now = app.provideClock().getNow()
+   ```
+
+In order to run tests on this new code, a new file, *TestApplication.kt*, will be created and inherit from the `GreetingApplication` class. As it inherits, the `provideClock()` method can be overridden:
+
+```java
+class TestApplication : GreetingApplication() {
+    private lateinit var clock: Clock
+    fun setClock(clock: Clock) {
+        this.clock = clock
+    }
+
+    override fun provideClock() : Clock = clock
+}
+```
+
+\*In order for `TestApplication` to make use of the `GreetingApplication` class as above, `GreetingApplication` has to be made `open` and so does its method, `provideClock()`.
+
+A custom test runner is also created instead of using the default JUnitRunner:
+
+```java
+class CustomTestRunner: AndroidJUnitRunner() {
+    override fun newApplication(cl: ClassLoader?, className: String?, context: Context?): Application {
+        return super.newApplication(cl, "android.learning.hermetictestapplication.TestApplication", context)
+    }
+}
+``` 
+
 
